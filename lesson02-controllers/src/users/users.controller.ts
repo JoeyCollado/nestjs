@@ -1,0 +1,32 @@
+import { Controller, Get, Param } from '@nestjs/common';
+
+@Controller('users')
+export class UsersController {
+  /*
+   GET /users
+   GET /users/interns
+   GET /users/:id
+   POST /users
+   PATCH /users/:id
+   DELETE /users/:id
+   */
+
+  @Get() // GET /users
+  findAll() {
+    return [];
+  }
+
+  /**
+   * IMPORTANT: Static routes must come BEFORE dynamic routes.
+   * If this was below ':id', Nest would treat 'interns' as an 'id'.
+   */
+  // @Get('interns') // GET /users/interns, order of routes matter
+  // findAllInterns() {
+  //   return [];
+  // }
+
+  @Get(':id') // GET /users/:id
+  findOne(@Param('id') id: string) {
+    return { id };
+  }
+}
