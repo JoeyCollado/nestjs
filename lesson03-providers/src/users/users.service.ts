@@ -38,7 +38,7 @@ export class UsersService {
 
   //methods
   //these five methods match the five routes in our user controller
-  findAll(role?: 'INTERN' | 'DEV' | 'ADMIN') {
+  findAll(role?: 'INTERN' | 'ENGINEER' | 'ADMIN') {
     if (role) {
       return this.users.filter((user) => user.role === role); //only returns user that has a role that was passed in
     }
@@ -53,7 +53,7 @@ export class UsersService {
   create(user: {
     name: string;
     email: string;
-    role: 'INTERN' | 'DEV' | 'ADMIN';
+    role: 'INTERN' | 'ENGINEER' | 'ADMIN';
   }) {
     const usersByHighestId = [...this.users].sort((a, b) => (b.id = a.id)); //sort users by highest id
 
@@ -71,7 +71,7 @@ export class UsersService {
     updatedUser: {
       name?: string;
       email?: string;
-      role?: 'INTERN' | 'DEV' | 'ADMIN';
+      role?: 'INTERN' | 'ENGINEER' | 'ADMIN';
     },
   ) {
     this.users = this.users.map((user) => {
@@ -82,5 +82,13 @@ export class UsersService {
     });
 
     return this.findOne(id); //return updated user
+  }
+
+  delete(id: number) {
+    const removedUser = this.findOne(id);
+
+    this.users = this.users.filter((user) => user.id !== id); //exclude user that needs to be removed
+
+    return removedUser; // return user after removing the excluded user
   }
 }
